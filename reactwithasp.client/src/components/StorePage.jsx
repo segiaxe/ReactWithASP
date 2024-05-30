@@ -1,4 +1,4 @@
-import React from 'react';
+
 import EntityTable from './EntityTable';
 
 const StorePage = () => (

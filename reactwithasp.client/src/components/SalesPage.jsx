@@ -1,5 +1,6 @@
-import React from 'react';
+
 import EntityTable from './EntityTable';
+import { Form } from 'semantic-ui-react';
 
 const Sales = () => {
     const apiBaseUrl = 'https://localhost:6266/';
@@ -19,7 +20,7 @@ const Sales = () => {
                             <input
                                 type="date"
                                 name={field}
-                                value={value || ''}
+                                value={value ? new Date(value).toISOString().split('T')[0] : ''}
                                 onChange={handleChange}
                                 required
                             />

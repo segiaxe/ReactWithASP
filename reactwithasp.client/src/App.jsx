@@ -4,7 +4,8 @@ import NavBar from './components/NavBar';
 import CustomerPage from './components/CustomerPage';
 import ProductPage from './components/ProductPage';
 import StorePage from './components/StorePage';
-import SalesPage from './components/SalesPage';
+//import SalesPage from './components/SalesPage';
+import Sale from './components/Sale';
 import 'semantic-ui-css/semantic.min.css';
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
                         <Route path="/customers" element={<CustomerPage />} />
                         <Route path="/products" element={<ProductPage />} />
                         <Route path="/stores" element={<StorePage />} />
-                        <Route path="/sales" element={<SalesPage />} />
+                        <Route path="/sales" element={<Sale />} />
                         <Route path="/" element={<CustomerPage />} />
                     </Routes>
                 </Container>

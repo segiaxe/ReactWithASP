@@ -42,6 +42,11 @@ class EntityTable extends Component {
         const url = editingEntity ? `${this.props.apiBaseUrl}api/${this.props.entityName}/${editingEntity.id}` : `${this.props.apiBaseUrl}api/${this.props.entityName}`;
         const method = editingEntity ? 'PUT' : 'POST';
 
+        // Format dateSold correctly before sending to the server
+        if (currentEntity.dateSold) {
+            currentEntity.dateSold = new Date(currentEntity.dateSold).toISOString();
+        }
+
         try {
             const response = await fetch(url, {
                 method,
@@ -82,7 +87,7 @@ class EntityTable extends Component {
 
     render() {
         const { entities, modalOpen, deleteModalOpen, currentEntity } = this.state;
-        const { entityFields, entityName } = this.props;
+        const { entityFields, entityName, renderField } = this.props;
 
         return (
             <div>
@@ -123,15 +128,19 @@ class EntityTable extends Component {
                     <Modal.Content>
                         <Form onSubmit={this.handleSubmit}>
                             {entityFields.map(field => (
-                                <Form.Field key={field}>
-                                    <label>{field}</label>
-                                    <input
-                                        name={field}
-                                        value={currentEntity[field] || ''}
-                                        onChange={this.handleChange}
-                                        required
-                                    />
-                                </Form.Field>
+                                renderField
+                                    ? renderField(field, currentEntity[field], this.handleChange)
+                                    : (
+                                        <Form.Field key={field}>
+                                            <label>{field}</label>
+                                            <input
+                                                name={field}
+                                                value={currentEntity[field] || ''}
+                                                onChange={this.handleChange}
+                                                required
+                                            />
+                                        </Form.Field>
+                                    )
                             ))}
                             <Button type='submit' color='green'>
                                 <Icon name='checkmark' /> {this.state.editingEntity ? 'Update' : 'Create'}

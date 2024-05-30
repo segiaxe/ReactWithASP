@@ -3,26 +3,26 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReactWithASP.Server.Models;
 
-[PrimaryKey("CustomerId", "ProductId", "StoreId")]
 public partial class Sale
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public int SaleId { get; set; }
+
+    [Required]
     public int CustomerId { get; set; }
 
-    [Key]
+    [Required]
     public int ProductId { get; set; }
 
-    [Key]
+    [Required]
     public int StoreId { get; set; }
 
     [Required]
-    public DateOnly DateSold { get; set; }
+    public DateTime DateSold { get; set; }
 
     [ForeignKey("CustomerId")]
     [InverseProperty("Sales")]

@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { Menu } from 'semantic-ui-react';
 import { NavLink } from 'react-router-dom';
 import './NavBar.css'; // Import the CSS file for custom styles

@@ -42,4 +42,25 @@ public class ReactWithAspContext : DbContext
             optionsBuilder.UseSqlServer(builder.ConnectionString);
         }
     }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Configure the Sale entity relationships
+        modelBuilder.Entity<Sale>()
+            .HasOne(s => s.Customer)
+            .WithMany(c => c.Sales)
+            .HasForeignKey(s => s.CustomerId);
+
+        modelBuilder.Entity<Sale>()
+            .HasOne(s => s.Product)
+            .WithMany(p => p.Sales)
+            .HasForeignKey(s => s.ProductId);
+
+        modelBuilder.Entity<Sale>()
+            .HasOne(s => s.Store)
+            .WithMany(st => st.Sales)
+            .HasForeignKey(s => s.StoreId);
+    }
 }

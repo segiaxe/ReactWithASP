@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReactWithASP.Server.Models;
 
@@ -22,34 +17,61 @@ namespace ReactWithASP.Server.Controllers
 
         // GET: api/Sales
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Sale>>> GetSales()
+        public async Task<ActionResult<IEnumerable<SaleDTO>>> GetSales()
         {
-            return await _context.Sales.ToListAsync();
+            return await _context.Sales
+                .Include(s => s.Customer)
+                .Include(s => s.Product)
+                .Include(s => s.Store)
+                .Select(s => new SaleDTO
+                {
+                    SaleId = s.SaleId,
+                    CustomerId = s.CustomerId,
+                    CustomerName = s.Customer.Name,
+                    ProductId = s.ProductId,
+                    ProductName = s.Product.Name,
+                    StoreId = s.StoreId,
+                    StoreName = s.Store.Name,
+                    DateSold = s.DateSold
+                })
+                .ToListAsync();
         }
 
-        // GET: api/Sales/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Sale>> GetSale(int id)
+        // POST: api/Sales
+        [HttpPost]
+        public async Task<ActionResult<Sale>> PostSale(SaleDTO saleDto)
         {
-            var sale = await _context.Sales.FindAsync(id);
-
-            if (sale == null)
+            var sale = new Sale
             {
-                return NotFound();
-            }
+                CustomerId = saleDto.CustomerId,
+                ProductId = saleDto.ProductId,
+                StoreId = saleDto.StoreId,
+                DateSold = saleDto.DateSold
+            };
 
-            return sale;
+            _context.Sales.Add(sale);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetSale", new { id = sale.SaleId }, sale);
         }
 
         // PUT: api/Sales/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSale(int id, Sale sale)
+        public async Task<IActionResult> PutSale(int id, SaleDTO saleDto)
         {
-            if (id != sale.CustomerId)
+            if (id != saleDto.SaleId)
             {
                 return BadRequest();
             }
+
+            var sale = new Sale
+            {
+                SaleId = saleDto.SaleId,
+                CustomerId = saleDto.CustomerId,
+                ProductId = saleDto.ProductId,
+                StoreId = saleDto.StoreId,
+                DateSold = saleDto.DateSold
+            };
 
             _context.Entry(sale).State = EntityState.Modified;
 
@@ -72,31 +94,6 @@ namespace ReactWithASP.Server.Controllers
             return NoContent();
         }
 
-        // POST: api/Sales
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Sale>> PostSale(Sale sale)
-        {
-            _context.Sales.Add(sale);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (SaleExists(sale.CustomerId))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetSale", new { id = sale.CustomerId }, sale);
-        }
-
         // DELETE: api/Sales/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSale(int id)
@@ -115,7 +112,19 @@ namespace ReactWithASP.Server.Controllers
 
         private bool SaleExists(int id)
         {
-            return _context.Sales.Any(e => e.CustomerId == id);
+            return _context.Sales.Any(e => e.SaleId == id);
         }
+    }
+
+    public class SaleDTO
+    {
+        public int SaleId { get; set; }
+        public int CustomerId { get; set; }
+        public int ProductId { get; set; }
+        public int StoreId { get; set; }
+        public DateTime DateSold { get; set; }
+        public string CustomerName { get; set; }
+        public string ProductName { get; set; }
+        public string StoreName { get; set; }
     }
 }

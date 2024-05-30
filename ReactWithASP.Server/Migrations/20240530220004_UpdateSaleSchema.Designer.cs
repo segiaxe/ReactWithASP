@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ReactWithASP.Server.Models;
 
@@ -11,9 +12,11 @@ using ReactWithASP.Server.Models;
 namespace ReactWithASP.Server.Migrations
 {
     [DbContext(typeof(ReactWithAspContext))]
-    partial class ReactWithAspContextModelSnapshot : ModelSnapshot
+    [Migration("20240530220004_UpdateSaleSchema")]
+    partial class UpdateSaleSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,4 +1,4 @@
-import Customer from './Customer';
+
 import EntityTable from './EntityTable';
 
 const CustomerPage = () => (
