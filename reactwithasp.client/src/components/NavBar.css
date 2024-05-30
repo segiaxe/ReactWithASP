@@ -1,0 +1,9 @@
+/* NavBar.css */
+
+.Menu {
+    background-color: black !important;
+}
+
+    .Menu .item {
+        color: white !important;
+    }

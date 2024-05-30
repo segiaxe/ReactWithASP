@@ -10,7 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="index.html" />
-    <None Remove="main.jsx" />
     <None Remove="src\index.css" />
     <None Remove="src\main.jsx" />
   </ItemGroup>
