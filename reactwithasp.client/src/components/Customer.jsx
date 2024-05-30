@@ -29,8 +29,13 @@ class Customer extends Component {
 
     handleSubmit = async () => {
         const { name, address, editingCustomer } = this.state;
-        const customerData = { id: editingCustomer ? editingCustomer.id : 0, name, address };
-        const url = editingCustomer ? `${this.addr}api/customers/${editingCustomer.id}` : `${this.addr}api/customers`;
+        const customerData = {
+            id: editingCustomer
+                ? editingCustomer.id : 0, name, address
+        };
+        const url = editingCustomer
+            ? `${this.addr}api/customers/${editingCustomer.id}`
+            : `${this.addr}api/customers`;
         const method = editingCustomer ? 'PUT' : 'POST';
 
         const response = await fetch(url, {

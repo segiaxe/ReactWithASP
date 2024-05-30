@@ -1,9 +1,12 @@
 import React from 'react';
+import EntityTable from './EntityTable';
 
 const StorePage = () => (
-    <div>
-        <h1>Stores Page</h1>
-    </div>
+    <EntityTable
+        apiBaseUrl='https://localhost:6266/'
+        entityName='stores'
+        entityFields={['name', 'address']}
+    />
 );
 
 export default StorePage;
