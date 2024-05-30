@@ -5,7 +5,7 @@ import './NavBar.css'; // Import the CSS file for custom styles
 
 const NavBar = () => (
     <Menu inverted style={{
-        backgroundColor: 'black', position: 'absolute', padding: '10px 0', width: '100%',
+        backgroundColor: 'black', position: 'top', padding: '10px 0', width: '100%',
         top: 0, }}>
         <Menu.Item header style={{ color: 'white' }}>
             React
