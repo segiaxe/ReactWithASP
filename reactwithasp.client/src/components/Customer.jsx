@@ -11,12 +11,13 @@ class Customer extends Component {
         editingCustomer: null,
     };
 
+    addr = 'https://localhost:6266/';
     componentDidMount() {
         this.fetchCustomers();
     }
 
     fetchCustomers = async () => {
-        const response = await fetch('/api/customers');
+        const response = await fetch(`${this.addr}api/customers`);
         const data = await response.json();
         this.setState({ customers: data });
     };
@@ -28,23 +29,23 @@ class Customer extends Component {
 
     handleSubmit = async () => {
         const { name, address, editingCustomer } = this.state;
-        if (editingCustomer) {
-            // Update customer
-            await fetch(`/api/customers/${editingCustomer.id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: editingCustomer.id, name, address }),
-            });
+        const customerData = { id: editingCustomer ? editingCustomer.id : 0, name, address };
+        const url = editingCustomer ? `${this.addr}api/customers/${editingCustomer.id}` : `${this.addr}api/customers`;
+        const method = editingCustomer ? 'PUT' : 'POST';
+
+        const response = await fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(customerData),
+        });
+
+        if (response.ok) {
+            this.fetchCustomers();
+            this.handleClose();
         } else {
-            // Create customer
-            await fetch('/api/customers', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, address }),
-            });
+            // Handle errors
+            console.error('Failed to save customer');
         }
-        this.fetchCustomers();
-        this.handleClose();
     };
 
     handleEdit = (customer) => {
@@ -57,7 +58,7 @@ class Customer extends Component {
     };
 
     handleDelete = async (id) => {
-        await fetch(`/api/customers/${id}`, { method: 'DELETE' });
+        await fetch(`${this.addr}api/customers/${id}`, { method: 'DELETE' });
         this.fetchCustomers();
     };
 
