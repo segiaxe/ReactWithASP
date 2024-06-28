@@ -56,8 +56,9 @@ class EntityTable extends Component {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
-            this.fetchEntities();
             this.handleClose();
+            this.fetchEntities();
+            window.location.reload();  // Refresh the entire page
         } catch (error) {
             console.error(`Failed to save ${this.props.entityName}:`, error);
         }
