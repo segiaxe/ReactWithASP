@@ -12,7 +12,8 @@ const Sales = () => {
     const [editingSale, setEditingSale] = useState(null);
     const [deletingSale, setDeletingSale] = useState(null);
 
-    const apiBaseUrl = 'https://localhost:6266/';
+    //const apiBaseUrl = 'https://localhost:6266/';
+    const apiBaseUrl = 'https://boarding-reactwithasp.azurewebsites.net/'
 
     useEffect(() => {
         fetchSales();

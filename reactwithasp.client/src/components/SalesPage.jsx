@@ -3,7 +3,8 @@ import EntityTable from './EntityTable';
 import { Form } from 'semantic-ui-react';
 
 const Sales = () => {
-    const apiBaseUrl = 'https://localhost:6266/';
+    //const apiBaseUrl = 'https://localhost:6266/';
+    const apiBaseUrl = 'https://boarding-reactwithasp.azurewebsites.net/'
     const entityName = 'sales';
     const entityFields = ['customerId', 'productId', 'storeId', 'dateSold'];
 

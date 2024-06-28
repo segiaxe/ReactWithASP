@@ -13,7 +13,8 @@ class Product extends Component {
         deletingProduct: null,
     };
 
-    addr = 'https://localhost:6266/';
+    //addr = 'https://localhost:6266/';
+    apiBaseUrl = 'https://boarding-reactwithasp.azurewebsites.net/';
 
     componentDidMount() {
         this.fetchProducts();
@@ -21,7 +22,8 @@ class Product extends Component {
 
     fetchProducts = async () => {
         try {
-            const response = await fetch(`${this.addr}api/products`);
+            //const response = await fetch(`${this.addr}api/products`);
+            const response = await fetch(`${this.apiBaseUrl}api/products`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }

@@ -13,7 +13,8 @@ import React from 'react';
 import EntityTable from './EntityTable';
 
 const Product = () => {
-    const apiBaseUrl = 'https://localhost:6266/';
+    //const apiBaseUrl = 'https://localhost:6266/';
+    const apiBaseUrl = 'https://boarding-reactwithasp.azurewebsites.net/'
     const entityName = 'products';
     const entityFields = ['name', 'price'];
 
