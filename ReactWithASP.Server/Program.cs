@@ -3,7 +3,9 @@ using ReactWithASP.Server.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddReactWithAspContext();
+//builder.Services.AddReactWithAspContext();
+// use connectionstring from appsettings.json
+builder.Services.AddReactWithAspContext(builder.Configuration.GetConnectionString("ReactWithAspDbcontext"));
 
 
 builder.Services.AddControllers();

@@ -12,12 +12,14 @@ class Customer extends Component {
     };
 
     addr = 'https://localhost:6266/';
+    apiBaseUrl = 'https://boarding-reactwithasp.azurewebsites.net/';
     componentDidMount() {
         this.fetchCustomers();
     }
 
     fetchCustomers = async () => {
-        const response = await fetch(`${this.addr}api/customers`);
+        //const response = await fetch(`${this.addr}api/customers`);
+        const response = await fetch(`${this.apiBaseUrl}api/customers`);
         const data = await response.json();
         this.setState({ customers: data });
     };

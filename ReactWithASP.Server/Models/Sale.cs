@@ -25,14 +25,14 @@ public partial class Sale
     public DateTime DateSold { get; set; }
 
     [ForeignKey("CustomerId")]
-    [InverseProperty("Sales")]
+    //[InverseProperty("Sales")]
     public virtual Customer Customer { get; set; } = null!;
 
     [ForeignKey("ProductId")]
-    [InverseProperty("Sales")]
+    //[InverseProperty("Sales")]
     public virtual Product Product { get; set; } = null!;
 
     [ForeignKey("StoreId")]
-    [InverseProperty("Sales")]
+    //[InverseProperty("Sales")]
     public virtual Store Store { get; set; } = null!;
 }

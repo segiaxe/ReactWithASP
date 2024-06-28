@@ -12,7 +12,8 @@ const Sales = () => {
     const [editingSale, setEditingSale] = useState(null);
     const [deletingSale, setDeletingSale] = useState(null);
 
-    const apiBaseUrl = 'https://localhost:6266/';
+    //const apiBaseUrl = 'https://localhost:6266/';
+    const apiBaseUrl = 'https://boarding-reactwithasp.azurewebsites.net/'
 
     useEffect(() => {
         fetchSales();
@@ -91,9 +92,16 @@ const Sales = () => {
     const handleChange = (e) => setCurrentSale({ ...currentSale, [e.target.name]: e.target.value });
 
     const handleSubmit = async () => {
-        const saleData = {
+        /*const saleData = {
             ...currentSale,
             dateSold: new Date(currentSale.dateSold).toISOString(),
+        };*/
+        const saleData = {
+            saleId: editingSale.saleId, // Make sure this is included for edits
+            customerId: parseInt(currentSale.customerId),
+            productId: parseInt(currentSale.productId),
+            storeId: parseInt(currentSale.storeId),
+            dateSold: new Date(currentSale.dateSold).toISOString()
         };
 
         const url = editingSale ? `${apiBaseUrl}api/sales/${editingSale.saleId}` : `${apiBaseUrl}api/sales`;

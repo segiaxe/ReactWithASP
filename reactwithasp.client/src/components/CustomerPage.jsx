@@ -6,7 +6,8 @@ const CustomerPage = () => (
         <Customer />
     </div>*/
     <EntityTable
-        apiBaseUrl='https://localhost:6266/'
+        //apiBaseUrl='https://localhost:6266/'
+        apiBaseUrl='https://boarding-reactwithasp.azurewebsites.net/'
         entityName='customers'
         entityFields={['name', 'address']}
     />
