@@ -82,7 +82,7 @@ namespace ReactWithASP.Server.Controllers
             {
                 if (id != saleDto.SaleId)
                 {
-                    return BadRequest();
+                    return BadRequest("ID mismatch");
                 }
 
                 var customer = _context.Customers

@@ -97,12 +97,16 @@ const Sales = () => {
             dateSold: new Date(currentSale.dateSold).toISOString(),
         };*/
         const saleData = {
-            saleId: editingSale.saleId, // Make sure this is included for edits
+            
             customerId: parseInt(currentSale.customerId),
             productId: parseInt(currentSale.productId),
             storeId: parseInt(currentSale.storeId),
             dateSold: new Date(currentSale.dateSold).toISOString()
         };
+
+        if (editingSale) {
+            saleData.saleId = editingSale.saleId;
+        }
 
         const url = editingSale ? `${apiBaseUrl}api/sales/${editingSale.saleId}` : `${apiBaseUrl}api/sales`;
         const method = editingSale ? 'PUT' : 'POST';
